@@ -1,16 +1,16 @@
 package main
 
 import (
+	"goAuthService/internal/handler"
 	"goAuthService/internal/repository"
 	"goAuthService/internal/service"
-	"goAuthService/internal/handler"
-	
+
 	"goAuthService/server"
 
+	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
-	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 
 	if err := initConfig(); err != nil {
 		log.Fatal().Err(err).Msg("some error with initializiing")
-			
+
 	}
 
 	db, err := server.NewPostgresConnection(server.Config{
@@ -27,6 +27,7 @@ func main() {
 		Username: viper.GetString("db.username"),
 		DBName:   viper.GetString("db.dbname"),
 		SSLMode:  viper.GetString("db.sslmode"),
+		Password: viper.GetString("db.password"),
 	})
 
 	if err != nil {
