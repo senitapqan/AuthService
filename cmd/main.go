@@ -10,6 +10,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -44,7 +45,14 @@ func main() {
 }
 
 func initConfig() error {
+	if err := godotenv.Load(); err != nil {
+		return err
+	}
 	viper.AddConfigPath("./config")
 	viper.SetConfigName("configs")
-	return viper.ReadInConfig()
+	if err := viper.ReadInConfig(); err != nil {
+		return err
+	}
+	viper.BindEnv("db.password", "DB_PASSWORD")
+	return nil
 }
