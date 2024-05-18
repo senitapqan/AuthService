@@ -1,28 +1,6 @@
 syntax = "proto3";
 
 service AuthService {
-    rpc SignIn(SignInRequest) return (SignInResponse) {}
-    rpc SignUp(SignUpRequest) return (SignUpResponse) {}
+   
 }
 
-message SignInRequest {
-    string username = 1;
-    string password = 2;
-}
-
-message SignInResponse {
-    string token = 1;
-}
-
-message SignUpRequest {
-    string name = 1;   
-    string surname = 2;
-    string email = 3;
-    string phone = 4; 
-    string username = 5;
-    string passwrod = 6;
-}
-
-message SignInResponse {
-    string message = 1;
-}
