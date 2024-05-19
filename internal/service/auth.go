@@ -4,6 +4,7 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
+	"goAuthService/dtos"
 	"goAuthService/internal/repository"
 	"goAuthService/models"
 	"time"
@@ -81,4 +82,35 @@ func (s *AuthService) GenerateToken(login, password string) (string, error) {
 
 	tokenString, err := token.SignedString([]byte(signingKey))
 	return tokenString, err
+}
+
+func (s *AuthService) ParseToken(accessToken string) (dtos.TokenResponse, error) {
+	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("invalid signing method")
+		}
+
+		return []byte(signingKey), nil
+	})
+
+	if err != nil {
+		return dtos.TokenResponse{}, err
+	}
+
+	claims, ok := token.Claims.(*tokenClaims)
+	if !ok {
+		return dtos.TokenResponse{}, errors.New("token claims are not type of *tokenClaims")
+	}
+
+	user, err := s.repos.GetUserById(claims.UserId)
+
+	if err != nil {
+		return dtos.TokenResponse{}, err
+	}
+
+	return dtos.TokenResponse{
+			UserId: claims.UserId, 
+			Roles: claims.Roles,
+			Email: user.Email,
+		}, nil
 }

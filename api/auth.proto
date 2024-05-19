@@ -1,6 +1,24 @@
 syntax = "proto3";
 
+package api;
+
+option go_package = "./api";
+
 service AuthService {
-   
+   rpc ParseToken (TokenRequest) returns (UserResponse) {}
 }
 
+message TokenRequest {
+    string token = 1;
+}
+
+message UserResponse {
+    int32 userId = 1;
+    string email = 2;
+    repeated Role items = 3;
+}
+
+message Role {
+    int32 id = 1;
+    string name = 2;
+}

@@ -27,5 +27,11 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		auth.POST("/sign-up", h.signUp)
 	}
 
+	internal := router.Group("/internal_api") 
+	{
+		internal.Use(h.localOnly())
+		internal.GET("parse-token", h.parseToken)
+	}
+
 	return router
 }

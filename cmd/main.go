@@ -50,7 +50,7 @@ func initConfig() error {
 		return err
 	}
 	viper.AddConfigPath("./config")
-	viper.SetConfigName("configs")
+	viper.SetConfigName("config")
 	if err := viper.ReadInConfig(); err != nil {
 		return err
 	}

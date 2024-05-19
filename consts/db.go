@@ -9,6 +9,6 @@ const (
 	AdminsTable     = "t_admin"
 
 	ClientRoleId  = 3
-	ManagerRoleId = 2
+	TeacherRoleId = 2
 	AdminRoleId   = 1
 )

@@ -29,6 +29,7 @@ func (h *Handler) signIn(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]interface{}{"token": token})
 }
 
+
 func (h *Handler) signUp(c *gin.Context) {
 	var request models.User
 

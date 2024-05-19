@@ -21,11 +21,6 @@ type User struct {
 	Archive  bool   `json:"archive" db:"archive"`
 }
 
-type Roles struct {
-	Id       int    `json:"role_id"`
-	RoleName string `json:"role_name"`
-}
-
 type RolesHeaders struct {
 	Role string
 	Id   int

@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 var (
