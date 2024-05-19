@@ -8,11 +8,13 @@ import (
 
 type Handler struct {
 	service *service.Service
+	validator RequestValidator
 }
 
 func NewHandler(service *service.Service) *Handler {
 	return &Handler{
 		service: service,
+		validator: NewReuqestValidator(),
 	}
 }
 
