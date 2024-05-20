@@ -7,30 +7,29 @@ import (
 )
 
 type Handler struct {
-	service *service.Service
+	service   *service.Service
 	validator RequestValidator
 }
 
 func NewHandler(service *service.Service) *Handler {
 	return &Handler{
-		service: service,
+		service:   service,
 		validator: NewReuqestValidator(),
 	}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
-	
-	auth := router.Group("/auth") 
+
+	auth := router.Group("/auth")
 	{
-		auth.POST("/sing-in", h.signIn)
+		auth.POST("/sign-in", h.signIn)
 		auth.POST("/sign-up", h.signUp)
 	}
 
-	internal := router.Group("/internal_api") 
+	internal := router.Group("/internal-api")
 	{
-		internal.Use(h.localOnly())
-		internal.GET("parse-token", h.parseToken)
+		internal.POST("/parse-token", h.parseToken)
 	}
 
 	return router
